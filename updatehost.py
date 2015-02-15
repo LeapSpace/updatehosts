@@ -19,7 +19,7 @@ def getContent(url, timeout=5):
 	return content
 
 #字符串查找关键词之前内容
-def getMain(content, keychars='#google-hosts-2015'):
+def getMain(content, keychars='#google hosts'):
 	pos1 = content.find(keychars)
 	pos2 = content.find(keychars,pos1+len(keychars))
 	m = content[pos1:pos2+len(keychars)]
@@ -30,7 +30,7 @@ def getMain(content, keychars='#google-hosts-2015'):
 #source host url
 url = 'http://www.360kb.com/kb/2_122.html'
 #标示字符串
-keychars = '#google-hosts-2015'
+keychars = '#google hosts'
 
 if __name__ == "__main__":
 	#获取当前操作系统，判断修改文件路径
