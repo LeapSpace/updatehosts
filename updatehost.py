@@ -1,11 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
-#
-#@Author Space
-#@Date 2015/1/30
-#@Email g0dl0veu@163.com
-#
-
 import urllib2,re,platform
 
 #urlib2抓取网页
@@ -32,31 +26,36 @@ url = 'http://www.360kb.com/kb/2_122.html'
 #标示字符串
 keychars = '#google hosts'
 
-if __name__ == "__main__":
-	#获取当前操作系统，判断修改文件路径
-	syst = platform.system()
-	if syst=='Windows':
-		#windows
-		hosts = 'C:\\Windows\\System32\\drivers\\etc\\hosts'
-	else:
-		#linux
-		hosts = '/etc/hosts'
+#获取当前操作系统，判断修改文件路径
+syst = platform.system()
+if syst=='Windows':
+	#windows
+	hosts = 'C:\\Windows\\System32\\drivers\\etc\\hosts'
+else:
+	#linux
+	hosts = '/etc/hosts'
 
-	content = getContent(url, 5)
-	if content==None:
-		exit
-	hostcontents = getMain(content,keychars)
+print 'get_page_content:'
+content = getContent(url, 5)
+if content==None:
+	print 'page_content_none'
+	exit
+print 'get_host_content:'
+hostcontents = getMain(content,keychars)
 
-	fp = open(hosts, 'rb')
-	c = fp.read()
-	fp.close()
+print 'open_host_file'
+fp = open(hosts, 'rb')
+c = fp.read()
+fp.close()
 
-	pos1 = c.find(keychars)
-	if pos1==-1:
-		result = c+"\n"*2+hostcontents
-	else :
-		result = c[:pos1]+"\n"*2+hostcontents
+pos1 = c.find(keychars)
+if pos1==-1:
+	result = c+"\n"*2+hostcontents
+else :
+	result = c[:pos1]+"\n"*2+hostcontents
+print 'write_hosts'
+fp = open(hosts, 'wb')
+fp.write(result)
+fp.close()
 
-	fp = open(hosts, 'wb')
-	fp.write(result)
-	fp.close()
+print 'complete!'
